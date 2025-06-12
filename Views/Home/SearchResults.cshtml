@@ -1,0 +1,80 @@
+﻿@model MuzikKatalogu.Models.SearchResultsViewModel
+
+@{
+    ViewData["Title"] = $"'{Model.SearchQuery}' Arama Sonuçları";
+}
+
+<h1 class="display-4">Arama Sonuçları: "@Model.SearchQuery"</h1>
+
+@if (Model.NoResults)
+{
+    <div class="alert alert-warning" role="alert">
+        Aramanız için herhangi bir sonuç bulunamadı.
+    </div>
+}
+else
+{
+    @if (Model.Artists != null && Model.Artists.Any())
+    {
+        <h2 class="mt-4">Sanatçılar</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            @foreach (var artist in Model.Artists)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm text-center">
+                        <img src="@artist.ImageUrl" class="card-img-top rounded-circle mx-auto mt-3" style="width: 100px; height: 100px; object-fit: cover;" alt="@artist.Name" onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" />
+                        <div class="card-body">
+                            <h5 class="card-title">@artist.Name</h5>
+                            <a asp-controller="Artists" asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-sm btn-outline-primary">Detaylar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (Model.Albums != null && Model.Albums.Any())
+    {
+        <h2 class="mt-4">Albümler</h2>
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            @foreach (var album in Model.Albums)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" style="height: 150px; object-fit: cover;" onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" />
+                        <div class="card-body">
+                            <h5 class="card-title">@album.Title</h5>
+                            <p class="card-text"><small class="text-muted">@album.Artist?.Name</small></p>
+                            <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-sm btn-outline-primary">Detaylar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    @if (Model.Songs != null && Model.Songs.Any())
+    {
+        <h2 class="mt-4">Şarkılar</h2>
+        <ul class="list-group list-group-flush">
+            @foreach (var song in Model.Songs)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>@song.Title</strong>
+                        <br />
+                        <small class="text-muted">@song.Album?.Artist?.Name - @song.Album?.Title</small>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">
+                        @(TimeSpan.FromSeconds(song.DurationSeconds).ToString(@"mm\:ss"))
+                    </span>
+                    <a asp-controller="Songs" asp-action="Details" asp-route-id="@song.SongId" class="btn btn-sm btn-info ms-2">Detaylar</a>
+                </li>
+            }
+        </ul>
+    }
+}
+
+<div class="mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Ana Sayfaya Geri Dön</a>
+</div>

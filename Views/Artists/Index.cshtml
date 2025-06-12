@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MuzikKatalogu.Models.Artist>
+
+@{
+    ViewData["Title"] = "Sanatçılar";
+}
+
+<h1>Sanatçılar</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Yeni Sanatçı Ekle</a>
+</p>
+<table class="table table-hover table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bio)
+                </td>
+                <td>
+                    <img src="@item.ImageUrl" alt="@item.Name" width="50" height="50" style="object-fit: cover; border-radius: 50%;"
+                         onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" /> @* Hata durumunda varsayılan görsel *@
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ArtistId" class="btn btn-sm btn-warning">Düzenle</a> |
+                    <a asp-action="Details" asp-route-id="@item.ArtistId" class="btn btn-sm btn-info">Detaylar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ArtistId" class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

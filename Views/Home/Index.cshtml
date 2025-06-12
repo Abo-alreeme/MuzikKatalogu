@@ -1,0 +1,87 @@
+﻿@* Views/Home/Index.cshtml *@
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Müzik Kataloğumuza Hoş Geldiniz!</h1>
+    <p>Sanatçıları, albümleri ve şarkıları keşfedin.</p>
+</div>
+
+<div class="container my-5">
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8">
+            <form asp-controller="Home" asp-action="Search" method="get">
+                <div class="input-group">
+                    <input type="text" name="query" class="form-control form-control-lg" placeholder="Sanatçı, albüm veya şarkı ara..." aria-label="Arama Kutusu" />
+                    <button class="btn btn-primary btn-lg" type="submit">Ara</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row text-center">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Sanatçılar</h5>
+                    <p class="card-text">Tüm sanatçıları görüntüleyin ve detaylarına göz atın.</p>
+                    <a asp-controller="Artists" asp-action="Index" class="btn btn-primary">Sanatçılar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Albümler</h5>
+                    <p class="card-text">Mevcut tüm albümleri keşfedin.</p>
+                    <a asp-controller="Albums" asp-action="Index" class="btn btn-primary">Albümler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="text-center mt-5 mb-4">Öne Çıkan Albümler</h2>
+    <div class="row">
+        @* Burada Controller'dan gelen öne çıkan albümler listesi foreach ile gösterilebilir *@
+        @* Örneğin: *@
+        @* @if (Model != null && Model.FeaturedAlbums != null) *@
+        @* { *@
+        @* foreach (var album in Model.FeaturedAlbums) *@
+        @* { *@
+        @* <div class="col-md-3 mb-4"> *@
+        @* <div class="card h-100 shadow-sm"> *@
+        @* <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" /> *@
+        @* <div class="card-body"> *@
+        @* <h6 class="card-title">@album.Title</h6> *@
+        @* <p class="card-text"><small class="text-muted">@album.Artist.Name</small></p> *@
+        @* <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-sm btn-outline-primary">Detaylar</a> *@
+        @* </div> *@
+        @* </div> *@
+        @* </div> *@
+        @* } *@
+        @* } *@
+    </div>
+
+    <h2 class="text-center mt-5 mb-4">Öne Çıkan Sanatçılar</h2>
+    <div class="row">
+        @* Burada Controller'dan gelen öne çıkan sanatçılar listesi foreach ile gösterilebilir *@
+        @* Örneğin: *@
+        @* @if (Model != null && Model.FeaturedArtists != null) *@
+        @* { *@
+        @* foreach (var artist in Model.FeaturedArtists) *@
+        @* { *@
+        @* <div class="col-md-3 mb-4"> *@
+        @* <div class="card h-100 shadow-sm text-center"> *@
+        @* <img src="@artist.ImageUrl" class="card-img-top rounded-circle mx-auto mt-3" style="width: 100px; height: 100px; object-fit: cover;" alt="@artist.Name" onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" /> *@
+        @* <div class="card-body"> *@
+        @* <h6 class="card-title">@artist.Name</h6> *@
+        @* <a asp-controller="Artists" asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-sm btn-outline-primary">Detaylar</a> *@
+        @* </div> *@
+        @* </div> *@
+        @* </div> *@
+        @* } *@
+        @* } *@
+    </div>
+
+</div>

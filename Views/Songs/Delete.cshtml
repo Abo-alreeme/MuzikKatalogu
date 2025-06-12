@@ -1,0 +1,43 @@
+﻿@* Views/Songs/Delete.cshtml *@
+@model MuzikKatalogu.Models.Song
+
+@{
+    ViewData["Title"] = "Şarkıyı Sil";
+}
+
+<h1>Şarkıyı Sil</h1>
+
+<h3>Bu şarkıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</h3>
+<div>
+    <h4>@Model.Title</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DurationSeconds)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DurationSeconds) saniye
+        </dd>
+        <dt class="col-sm-2">
+            Albüm
+        </dt>
+        <dd class="col-sm-10">
+            <a asp-controller="Albums" asp-action="Details" asp-route-id="@Model.AlbumId">
+                @Html.DisplayFor(model => model.Album.Title)
+            </a>
+            (@Html.DisplayFor(model => model.Album.Artist.Name))
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="SongId" />
+        <input type="submit" value="Sil" class="btn btn-danger" /> |
+        <a asp-controller="Albums" asp-action="Details" asp-route-id="@Model.AlbumId" class="btn btn-secondary">Albümüne Geri Dön</a>
+    </form>
+</div>

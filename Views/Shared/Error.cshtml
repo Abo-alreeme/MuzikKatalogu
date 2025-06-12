@@ -1,0 +1,22 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Hata";
+}
+
+<h1 class="text-danger">Hata.</h1>
+<h2 class="text-danger">İsteğiniz işlenirken bir hata oluştu.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>İstek Kimliği:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<h3>Geliştirme Modu</h3>
+<p>
+    **Geliştirme Ortamı**'nda hata ayıklamayı etkinleştirmek, görüntülenecek kilitlenmiş isteklerle ilgili daha ayrıntılı bilgiler sağlar.
+</p>
+<p>
+    **Geliştirme Ortamı**'nda duyarlı bilgilerin önbelleğe alınmasını önlemek için geliştirme ortamı kontrolünü etkinleştirin.
+</p>

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<MuzikKatalogu.Models.Album>
+
+@{
+    ViewData["Title"] = "Albümler";
+}
+
+<h1>Albümler</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Yeni Albüm Ekle</a>
+</p>
+<table class="table table-hover table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoverImageUrl)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist!.Name) @* Sanatçı adı gösterimi için null kontrolü eklendi *@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <img src="@item.CoverImageUrl" alt="@item.Title" width="50" height="50" style="object-fit: cover;"
+                         onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" /> @* Hata durumunda varsayılan görsel *@
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AlbumId" class="btn btn-sm btn-warning">Düzenle</a> |
+                    <a asp-action="Details" asp-route-id="@item.AlbumId" class="btn btn-sm btn-info">Detaylar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.AlbumId" class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+﻿@* Views/Songs/Index.cshtml *@
+@model IEnumerable<MuzikKatalogu.Models.Song>
+
+@{
+    ViewData["Title"] = "Tüm Şarkılar";
+}
+
+<h1>Tüm Şarkılar</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DurationSeconds)
+            </th>
+            <th>
+                Albüm
+            </th>
+            <th>
+                Sanatçı
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DurationSeconds) sn
+                </td>
+                <td>
+                    <a asp-controller="Albums" asp-action="Details" asp-route-id="@item.AlbumId">
+                        @Html.DisplayFor(modelItem => item.Album.Title)
+                    </a>
+                </td>
+                <td>
+                    <a asp-controller="Artists" asp-action="Details" asp-route-id="@item.Album.ArtistId">
+                        @Html.DisplayFor(modelItem => item.Album.Artist.Name)
+                    </a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SongId" class="btn btn-sm btn-info">Düzenle</a> |
+                    <a asp-action="Details" asp-route-id="@item.SongId" class="btn btn-sm btn-primary">Detaylar</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SongId" class="btn btn-sm btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

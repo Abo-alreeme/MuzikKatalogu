@@ -1,0 +1,45 @@
+﻿@* Views/Artists/Create.cshtml *@
+@model MuzikKatalogu.Models.Artist
+
+@{
+    ViewData["Title"] = "Yeni Sanatçı Ekle";
+}
+
+<h1>Yeni Sanatçı Ekle</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Bio" class="control-label"></label>
+                <textarea asp-for="Bio" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Bio" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="/images/artists/default_artist.jpg" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Listeye Geri Dön</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

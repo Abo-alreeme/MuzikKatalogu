@@ -1,0 +1,42 @@
+﻿@* Views/Artists/Delete.cshtml *@
+@model MuzikKatalogu.Models.Artist
+
+@{
+    ViewData["Title"] = "Sanatçıyı Sil";
+}
+
+<h1>Sanatçıyı Sil</h1>
+
+<h3>Bu sanatçıyı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.</h3>
+<div>
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Bio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Bio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.ImageUrl" width="100" class="img-thumbnail" onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" />
+            <br />
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ArtistId" />
+        <input type="submit" value="Sil" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Listeye Geri Dön</a>
+    </form>
+</div>

@@ -1,0 +1,63 @@
+﻿@model MuzikKatalogu.Models.Artist
+
+@{
+    ViewData["Title"] = "Sanatçı Detayları";
+}
+
+<h1 class="display-4">@Html.DisplayFor(model => model.Name)</h1>
+
+<div class="card shadow-sm p-3 mb-5 bg-white rounded">
+    <div class="row g-0">
+        <div class="col-md-4 text-center">
+            <img src="@Model.ImageUrl" class="img-fluid rounded-circle" alt="@Model.Name" style="width: 200px; height: 200px; object-fit: cover;"
+                 onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" />
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Sanatçı Bilgileri</h5>
+                <hr />
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        Biyografi
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Bio)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-4">Albümleri</h4>
+@if (Model.Albums != null && Model.Albums.Any())
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var album in Model.Albums.OrderBy(a => a.ReleaseDate))
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" style="height: 200px; object-fit: cover;"
+                         onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" />
+                    <div class="card-body">
+                        <h6 class="card-title">@album.Title</h6>
+                        <p class="card-text"><small class="text-muted">@album.ReleaseDate.Year</small></p>
+                        <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-sm btn-outline-primary">Detaylar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        Bu sanatçının henüz albümü bulunmamaktadır.
+    </div>
+}
+
+
+<div class="mt-4">
+    <a asp-action="Edit" asp-route-id="@Model?.ArtistId" class="btn btn-warning">Düzenle</a> |
+    <a asp-action="Index" class="btn btn-secondary">Sanatçı Listesine Geri Dön</a>
+</div>

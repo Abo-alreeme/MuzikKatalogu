@@ -1,0 +1,56 @@
+﻿@* Views/Albums/Edit.cshtml *@
+@model MuzikKatalogu.Models.Album
+
+@{
+    ViewData["Title"] = "Albüm Düzenle";
+}
+
+<h1>Albüm Düzenle</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AlbumId" />
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ReleaseDate" class="control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" type="date" />
+                <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="CoverImageUrl" class="control-label"></label>
+                <input asp-for="CoverImageUrl" class="form-control" />
+                <span asp-validation-for="CoverImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="ArtistId" class="control-label"></label>
+                <select asp-for="ArtistId" class="form-control" asp-items="ViewBag.ArtistId"></select>
+                <span asp-validation-for="ArtistId" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Kaydet" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Listeye Geri Dön</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
