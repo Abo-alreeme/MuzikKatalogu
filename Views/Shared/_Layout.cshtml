@@ -1,18 +1,21 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MuzikKatalogu</title>
+    <title>@ViewData["Title"] - Müzik Kataloğu</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MuzikKatalogu.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MuzikKatalogu</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-music me-2"></i>Müzik Kataloğu
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,16 +23,24 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Ana Sayfa</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                                <i class="fas fa-home me-1"></i>Ana Sayfa
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Artists" asp-action="Index">Sanatçılar</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Artists" asp-action="Index">
+                                <i class="fas fa-user me-1"></i>Sanatçılar
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Albums" asp-action="Index">Albümler</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Albums" asp-action="Index">
+                                <i class="fas fa-compact-disc me-1"></i>Albümler
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Songs" asp-action="Index">Şarkılar</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Songs" asp-action="Index">
+                                <i class="fas fa-music me-1"></i>Şarkılar
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -44,12 +55,64 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - MuzikKatalogu - <a asp-area="" asp-controller="Home" asp-action="Privacy">Gizlilik</a>
+            &copy; 2024 - Müzik Kataloğu
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<style>
+    .navbar {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .navbar-brand {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-link {
+        position: relative;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #fff !important;
+        transform: translateY(-1px);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    .nav-link:hover::after {
+        width: 80%;
+    }
+
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+</style>

@@ -12,13 +12,12 @@ namespace MuzikKatalogu.Models
         [StringLength(200, ErrorMessage = "Albüm başlığı en fazla 200 karakter olabilir.")]
         public string Title { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Çıkış tarihi zorunludur.")]
+        [Display(Name = "Yayın Tarihi")]
         [DataType(DataType.Date)]
-        [Display(Name = "Çıkış Tarihi")]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
-        [Display(Name = "Kapak Görseli URL")]
-        [StringLength(255, ErrorMessage = "Kapak görseli URL'si en fazla 255 karakter olabilir.")]
+        [Display(Name = "Kapak Resmi URL")]
+        [StringLength(500, ErrorMessage = "Kapak resmi URL'si en fazla 500 karakter olabilir.")]
         public string? CoverImageUrl { get; set; }
 
         [Required(ErrorMessage = "Fiyat zorunludur.")]
@@ -34,7 +33,7 @@ namespace MuzikKatalogu.Models
         // Navigasyon özelliği: İlişkili sanatçı nesnesi
         public Artist? Artist { get; set; }
 
-        // Navigasyon özelliği: Bir albümün birden fazla şarkısı olabilir.
-        public ICollection<Song>? Songs { get; set; }
+        // Navigasyon özelliği: Albümdeki şarkılar
+        public ICollection<Song> Songs { get; set; } = new List<Song>();
     }
 }

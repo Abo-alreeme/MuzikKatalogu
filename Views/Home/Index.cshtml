@@ -1,87 +1,260 @@
 ﻿@* Views/Home/Index.cshtml *@
+@model MuzikKatalogu.Models.HomeViewModel
+
 @{
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Müzik Kataloğumuza Hoş Geldiniz!</h1>
-    <p>Sanatçıları, albümleri ve şarkıları keşfedin.</p>
-</div>
-
-<div class="container my-5">
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-8">
-            <form asp-controller="Home" asp-action="Search" method="get">
-                <div class="input-group">
-                    <input type="text" name="query" class="form-control form-control-lg" placeholder="Sanatçı, albüm veya şarkı ara..." aria-label="Arama Kutusu" />
-                    <button class="btn btn-primary btn-lg" type="submit">Ara</button>
-                </div>
+<div class="hero-section text-center py-5 mb-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+    <div class="container">
+        <h1 class="display-4 fw-bold text-white mb-4">Müzik Kataloğu</h1>
+        <p class="lead text-light mb-4">Favori sanatçılarınızın, albümlerinizin ve şarkılarınızın koleksiyonunu keşfedin.</p>
+        <div class="search-container mx-auto" style="max-width: 600px;">
+            <form asp-action="Search" method="get" class="d-flex">
+                <input type="text" name="query" class="form-control form-control-lg" placeholder="Sanatçı, albüm veya şarkı ara..." style="border-radius: 50px 0 0 50px; border: none; background-color: rgba(255, 255, 255, 0.1); color: white;">
+                <button type="submit" class="btn btn-primary btn-lg" style="border-radius: 0 50px 50px 0; background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); border: none;">
+                    <i class="fas fa-search"></i>
+                </button>
             </form>
         </div>
     </div>
-
-    <div class="row text-center">
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Sanatçılar</h5>
-                    <p class="card-text">Tüm sanatçıları görüntüleyin ve detaylarına göz atın.</p>
-                    <a asp-controller="Artists" asp-action="Index" class="btn btn-primary">Sanatçılar</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-4">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">Albümler</h5>
-                    <p class="card-text">Mevcut tüm albümleri keşfedin.</p>
-                    <a asp-controller="Albums" asp-action="Index" class="btn btn-primary">Albümler</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <h2 class="text-center mt-5 mb-4">Öne Çıkan Albümler</h2>
-    <div class="row">
-        @* Burada Controller'dan gelen öne çıkan albümler listesi foreach ile gösterilebilir *@
-        @* Örneğin: *@
-        @* @if (Model != null && Model.FeaturedAlbums != null) *@
-        @* { *@
-        @* foreach (var album in Model.FeaturedAlbums) *@
-        @* { *@
-        @* <div class="col-md-3 mb-4"> *@
-        @* <div class="card h-100 shadow-sm"> *@
-        @* <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" /> *@
-        @* <div class="card-body"> *@
-        @* <h6 class="card-title">@album.Title</h6> *@
-        @* <p class="card-text"><small class="text-muted">@album.Artist.Name</small></p> *@
-        @* <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-sm btn-outline-primary">Detaylar</a> *@
-        @* </div> *@
-        @* </div> *@
-        @* </div> *@
-        @* } *@
-        @* } *@
-    </div>
-
-    <h2 class="text-center mt-5 mb-4">Öne Çıkan Sanatçılar</h2>
-    <div class="row">
-        @* Burada Controller'dan gelen öne çıkan sanatçılar listesi foreach ile gösterilebilir *@
-        @* Örneğin: *@
-        @* @if (Model != null && Model.FeaturedArtists != null) *@
-        @* { *@
-        @* foreach (var artist in Model.FeaturedArtists) *@
-        @* { *@
-        @* <div class="col-md-3 mb-4"> *@
-        @* <div class="card h-100 shadow-sm text-center"> *@
-        @* <img src="@artist.ImageUrl" class="card-img-top rounded-circle mx-auto mt-3" style="width: 100px; height: 100px; object-fit: cover;" alt="@artist.Name" onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" /> *@
-        @* <div class="card-body"> *@
-        @* <h6 class="card-title">@artist.Name</h6> *@
-        @* <a asp-controller="Artists" asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-sm btn-outline-primary">Detaylar</a> *@
-        @* </div> *@
-        @* </div> *@
-        @* </div> *@
-        @* } *@
-        @* } *@
-    </div>
-
 </div>
+
+<div class="container">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card" style="background: linear-gradient(135deg, #2a2a3a 0%, #1f1f2e 100%);">
+                <div class="card-body text-center p-4">
+                    <div class="icon-circle mb-4 mx-auto" style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);">
+                        <i class="fas fa-music fa-2x text-white"></i>
+                    </div>
+                    <h3 class="card-title h4 mb-3 text-white">Şarkılar</h3>
+                    <p class="card-text text-light mb-4">Tüm şarkılarınızı görüntüleyin, yeni şarkılar ekleyin ve mevcut şarkıları düzenleyin.</p>
+                    <a asp-controller="Songs" asp-action="Index" class="btn btn-primary rounded-pill px-4" style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); border: none;">
+                        Şarkıları Görüntüle
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card" style="background: linear-gradient(135deg, #2a2a3a 0%, #1f1f2e 100%);">
+                <div class="card-body text-center p-4">
+                    <div class="icon-circle mb-4 mx-auto" style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);">
+                        <i class="fas fa-compact-disc fa-2x text-white"></i>
+                    </div>
+                    <h3 class="card-title h4 mb-3 text-white">Albümler</h3>
+                    <p class="card-text text-light mb-4">Albüm koleksiyonunuzu yönetin, yeni albümler ekleyin ve mevcut albümleri düzenleyin.</p>
+                    <a asp-controller="Albums" asp-action="Index" class="btn btn-primary rounded-pill px-4" style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); border: none;">
+                        Albümleri Görüntüle
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-card" style="background: linear-gradient(135deg, #2a2a3a 0%, #1f1f2e 100%);">
+                <div class="card-body text-center p-4">
+                    <div class="icon-circle mb-4 mx-auto" style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);">
+                        <i class="fas fa-user fa-2x text-white"></i>
+                    </div>
+                    <h3 class="card-title h4 mb-3 text-white">Sanatçılar</h3>
+                    <p class="card-text text-light mb-4">Sanatçı koleksiyonunuzu yönetin, yeni sanatçılar ekleyin ve mevcut sanatçıları düzenleyin.</p>
+                    <a asp-controller="Artists" asp-action="Index" class="btn btn-primary rounded-pill px-4" style="background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); border: none;">
+                        Sanatçıları Görüntüle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="section-title mb-4">Öne Çıkan Albümler</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                @foreach (var album in Model.FeaturedAlbums)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm hover-card" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+                            <div class="position-relative">
+                                @if (!string.IsNullOrEmpty(album.CoverImageUrl))
+                                {
+                                    <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" style="height: 200px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background: rgba(255,255,255,0.1);">
+                                        <i class="fas fa-music fa-3x text-white-50"></i>
+                                    </div>
+                                }
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title text-white">@album.Title</h5>
+                                <p class="card-text text-white-50">
+                                    <i class="fas fa-user me-2"></i>@album.Artist?.Name
+                                </p>
+                                <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-outline-light btn-sm">
+                                    <i class="fas fa-info-circle me-1"></i>Detaylar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <h2 class="section-title mb-4">Öne Çıkan Sanatçılar</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                @foreach (var artist in Model.FeaturedArtists)
+                {
+                    <div class="col">
+                        <div class="card h-100 shadow-sm hover-card" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    @if (!string.IsNullOrEmpty(artist.ImageUrl))
+                                    {
+                                        <img src="@artist.ImageUrl" class="rounded-circle mx-auto" style="width: 100px; height: 100px; object-fit: cover;" alt="@artist.Name">
+                                    }
+                                    else
+                                    {
+                                        <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; background: rgba(255,255,255,0.1);">
+                                            <i class="fas fa-user fa-3x text-white-50"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <h5 class="card-title text-white">@artist.Name</h5>
+                                <a asp-controller="Artists" asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-outline-light btn-sm">Detaylar</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #1a1a2e;
+    }
+
+    .hero-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center/cover;
+        opacity: 0.1;
+        z-index: 0;
+    }
+
+    .hero-section .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .hover-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    .search-container .form-control {
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-container .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .search-container .btn {
+        padding: 1rem 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .search-container .form-control:focus {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        border-color: #4a90e2;
+        background-color: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #1f2937;
+    }
+
+    .album-card {
+        transition: transform 0.3s ease;
+    }
+
+    .album-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .album-cover {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.5rem;
+    }
+
+    .album-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .album-card:hover .album-overlay {
+        opacity: 1;
+    }
+
+    .artist-card {
+        transition: transform 0.3s ease;
+    }
+
+    .artist-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .artist-image img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border: 4px solid white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+</style>

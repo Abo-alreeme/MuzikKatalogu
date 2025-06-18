@@ -23,50 +23,61 @@ namespace MuzikKatalogu.Controllers
         {
             var viewModel = new HomeViewModel
             {
-                FeaturedAlbums = await _context.Albums
-                                            .Include(a => a.Artist)
-                                            .OrderByDescending(a => a.ReleaseDate) // Yeni çıkanlar veya popüler olanlar
-                                            .Take(4)
-                                            .ToListAsync(),
                 FeaturedArtists = await _context.Artists
-                                             .OrderBy(a => a.Name)
-                                             .Take(4)
-                                             .ToListAsync()
+                    .OrderByDescending(a => a.Albums.Count)
+                    .Take(4)
+                    .ToListAsync(),
+                FeaturedAlbums = await _context.Albums
+                    .Include(a => a.Artist)
+                    .OrderByDescending(a => a.ReleaseDate)
+                    .Take(4)
+                    .ToListAsync()
             };
+
             return View(viewModel);
         }
 
         public async Task<IActionResult> Search(string query)
         {
-            if (string.IsNullOrWhiteSpace(query))
+            try
             {
+                if (string.IsNullOrWhiteSpace(query))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                _logger.LogInformation($"Search query: {query}");
+
+                var searchResults = new SearchResultsViewModel
+                {
+                    SearchQuery = query,
+                    Artists = await _context.Artists
+                        .Where(a => a.Name.Contains(query))
+                        .ToListAsync(),
+                    Albums = await _context.Albums
+                        .Include(a => a.Artist)
+                        .Where(a => a.Title.Contains(query) || a.Artist.Name.Contains(query))
+                        .ToListAsync(),
+                    Songs = await _context.Songs
+                        .Include(s => s.Album)
+                            .ThenInclude(a => a.Artist)
+                        .Where(s => s.Title.Contains(query) || 
+                                  s.Album.Title.Contains(query) || 
+                                  s.Album.Artist.Name.Contains(query))
+                        .ToListAsync()
+                };
+
+                _logger.LogInformation($"Found {searchResults.Artists.Count} artists, " +
+                                     $"{searchResults.Albums.Count} albums, " +
+                                     $"{searchResults.Songs.Count} songs");
+
+                return View(searchResults);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during search");
                 return RedirectToAction(nameof(Index));
             }
-
-            var artists = await _context.Artists
-                                        .Where(a => a.Name.Contains(query) || (a.Bio != null && a.Bio.Contains(query)))
-                                        .ToListAsync();
-
-            var albums = await _context.Albums
-                                       .Include(a => a.Artist)
-                                       .Where(a => a.Title.Contains(query) || (a.Artist != null && a.Artist.Name.Contains(query)))
-                                       .ToListAsync();
-
-            var songs = await _context.Songs
-                                      .Include(s => s.Album)
-                                      .ThenInclude(a => a.Artist)
-                                      .Where(s => s.Title.Contains(query) || (s.Album != null && s.Album.Title.Contains(query)) || (s.Album != null && s.Album.Artist != null && s.Album.Artist.Name.Contains(query)))
-                                      .ToListAsync();
-
-            var searchResults = new SearchResultsViewModel
-            {
-                SearchQuery = query,
-                Artists = artists,
-                Albums = albums,
-                Songs = songs
-            };
-
-            return View("SearchResults", searchResults); // Yeni SearchResults View'a yönlendir
         }
 
         public IActionResult Privacy()

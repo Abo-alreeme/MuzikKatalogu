@@ -1,49 +1,77 @@
 ﻿@model IEnumerable<MuzikKatalogu.Models.Artist>
 
 @{
-    ViewData["Title"] = "Sanatçılar";
+    ViewData["Title"] = "Tüm Sanatçılar";
 }
 
-<h1>Sanatçılar</h1>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-white">Tüm Sanatçılar</h1>
+        <a asp-action="Create" class="btn btn-primary rounded-pill">
+            <i class="fas fa-plus me-2"></i>Yeni Sanatçı Ekle
+        </a>
+    </div>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Yeni Sanatçı Ekle</a>
-</p>
-<table class="table table-hover table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Bio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Bio)
-                </td>
-                <td>
-                    <img src="@item.ImageUrl" alt="@item.Name" width="50" height="50" style="object-fit: cover; border-radius: 50%;"
-                         onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" /> @* Hata durumunda varsayılan görsel *@
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ArtistId" class="btn btn-sm btn-warning">Düzenle</a> |
-                    <a asp-action="Details" asp-route-id="@item.ArtistId" class="btn btn-sm btn-info">Detaylar</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ArtistId" class="btn btn-sm btn-danger">Sil</a>
-                </td>
-            </tr>
+            <div class="col">
+                <div class="card h-100 shadow-sm" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title text-white mb-0">@item.Name</h5>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.ArtistId" class="btn btn-sm btn-light">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.ArtistId" class="btn btn-sm btn-light">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.ArtistId" class="btn btn-sm btn-light">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="card-text text-white-50">
+                            <i class="fas fa-compact-disc me-2"></i>@item.Albums?.Count Albüm
+                        </p>
+                        @* Şarkı sayısı göstermek isterseniz aşağıdaki satırı açabilirsiniz: *@
+                        @* <p class="card-text text-white-50">
+                            <i class="fas fa-music me-2"></i>@item.Albums?.SelectMany(a => a.Songs).Count() Şarkı
+                        </p> *@
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    }
+
+    .btn-group {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .card:hover .btn-group {
+        opacity: 1;
+    }
+
+    .btn-light {
+        background: rgba(255,255,255,0.9);
+        border: none;
+    }
+
+    .btn-light:hover {
+        background: #fff;
+    }
+</style>

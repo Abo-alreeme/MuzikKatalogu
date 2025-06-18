@@ -5,41 +5,107 @@
     ViewData["Title"] = "Yeni Sanatçı Ekle";
 }
 
-<h1>Yeni Sanatçı Ekle</h1>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h1 class="h3 mb-0 text-gradient">Yeni Sanatçı Ekle</h1>
+                        <a asp-action="Index" class="btn btn-outline-primary rounded-pill">
+                            <i class="fas fa-arrow-left me-2"></i>Listeye Dön
+                        </a>
+                    </div>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group mb-3">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                    <form asp-action="Create" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        
+                        <div class="form-floating mb-3">
+                            <input asp-for="Name" class="form-control" placeholder="Sanatçı Adı" required />
+                            <label asp-for="Name">Sanatçı Adı</label>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea asp-for="Bio" class="form-control" placeholder="Biyografi" style="height: 150px" required></textarea>
+                            <label asp-for="Bio">Biyografi</label>
+                            <span asp-validation-for="Bio" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input asp-for="ImageUrl" class="form-control" placeholder="Görsel URL" />
+                            <label asp-for="ImageUrl">Görsel URL</label>
+                            <div class="form-text">Örnek: /images/artists/default_artist.jpg</div>
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill">
+                                <i class="fas fa-plus me-2"></i>Sanatçıyı Ekle
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group mb-3">
-                <label asp-for="Bio" class="control-label"></label>
-                <textarea asp-for="Bio" class="form-control" rows="5"></textarea>
-                <span asp-validation-for="Bio" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <label asp-for="ImageUrl" class="control-label"></label>
-                <input asp-for="ImageUrl" class="form-control" placeholder="/images/artists/default_artist.jpg" />
-                <span asp-validation-for="ImageUrl" class="text-danger"></span>
-            </div>
-            <div class="form-group mb-3">
-                <input type="submit" value="Ekle" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Listeye Geri Dön</a>
-</div>
+<style>
+    .text-gradient {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label {
+        color: #6366f1;
+    }
+
+    .form-control:focus {
+        border-color: #6366f1;
+        box-shadow: 0 0 0 0.25rem rgba(99, 102, 241, 0.25);
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    }
+
+    .btn-outline-primary {
+        color: #6366f1;
+        border-color: #6366f1;
+    }
+
+    .btn-outline-primary:hover {
+        background: #6366f1;
+        border-color: #6366f1;
+    }
+</style>
 
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        // Form validation için Bootstrap validation
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
 }

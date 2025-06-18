@@ -4,77 +4,144 @@
     ViewData["Title"] = $"'{Model.SearchQuery}' Arama Sonuçları";
 }
 
-<h1 class="display-4">Arama Sonuçları: "@Model.SearchQuery"</h1>
-
-@if (Model.NoResults)
-{
-    <div class="alert alert-warning" role="alert">
-        Aramanız için herhangi bir sonuç bulunamadı.
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-white">Arama Sonuçları: "@Model.SearchQuery"</h1>
+        <a asp-action="Index" class="btn btn-outline-primary rounded-pill">
+            <i class="fas fa-arrow-left me-2"></i>Ana Sayfaya Dön
+        </a>
     </div>
-}
-else
-{
-    @if (Model.Artists != null && Model.Artists.Any())
+
+    @if (Model.NoResults)
     {
-        <h2 class="mt-4">Sanatçılar</h2>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            @foreach (var artist in Model.Artists)
-            {
-                <div class="col">
-                    <div class="card h-100 shadow-sm text-center">
-                        <img src="@artist.ImageUrl" class="card-img-top rounded-circle mx-auto mt-3" style="width: 100px; height: 100px; object-fit: cover;" alt="@artist.Name" onerror="this.onerror=null;this.src='/images/artists/default_artist.jpg';" />
-                        <div class="card-body">
-                            <h5 class="card-title">@artist.Name</h5>
-                            <a asp-controller="Artists" asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-sm btn-outline-primary">Detaylar</a>
-                        </div>
-                    </div>
-                </div>
-            }
+        <div class="alert alert-warning" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Aramanız için herhangi bir sonuç bulunamadı.
         </div>
     }
-
-    @if (Model.Albums != null && Model.Albums.Any())
+    else
     {
-        <h2 class="mt-4">Albümler</h2>
-        <div class="row row-cols-1 row-cols-md-4 g-4">
-            @foreach (var album in Model.Albums)
-            {
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" style="height: 150px; object-fit: cover;" onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" />
-                        <div class="card-body">
-                            <h5 class="card-title">@album.Title</h5>
-                            <p class="card-text"><small class="text-muted">@album.Artist?.Name</small></p>
-                            <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-sm btn-outline-primary">Detaylar</a>
+        @if (Model.Artists != null && Model.Artists.Any())
+        {
+            <div class="mb-5">
+                <h2 class="h4 mb-4 text-white">Sanatçılar</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                    @foreach (var artist in Model.Artists)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+                                <div class="card-body text-center">
+                                    <div class="mb-3">
+                                        @if (!string.IsNullOrEmpty(artist.ImageUrl))
+                                        {
+                                            <img src="@artist.ImageUrl" class="rounded-circle mx-auto" style="width: 100px; height: 100px; object-fit: cover;" alt="@artist.Name">
+                                        }
+                                        else
+                                        {
+                                            <div class="rounded-circle mx-auto d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; background: rgba(255,255,255,0.1);">
+                                                <i class="fas fa-user fa-3x text-white-50"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                    <h5 class="card-title text-white">@artist.Name</h5>
+                                    <a asp-controller="Artists" asp-action="Details" asp-route-id="@artist.ArtistId" class="btn btn-light btn-sm">
+                                        <i class="fas fa-info-circle me-1"></i>Detaylar
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    }
                 </div>
-            }
-        </div>
-    }
+            </div>
+        }
 
-    @if (Model.Songs != null && Model.Songs.Any())
-    {
-        <h2 class="mt-4">Şarkılar</h2>
-        <ul class="list-group list-group-flush">
-            @foreach (var song in Model.Songs)
-            {
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>@song.Title</strong>
-                        <br />
-                        <small class="text-muted">@song.Album?.Artist?.Name - @song.Album?.Title</small>
-                    </div>
-                    <span class="badge bg-primary rounded-pill">
-                        @(TimeSpan.FromSeconds(song.DurationSeconds).ToString(@"mm\:ss"))
-                    </span>
-                    <a asp-controller="Songs" asp-action="Details" asp-route-id="@song.SongId" class="btn btn-sm btn-info ms-2">Detaylar</a>
-                </li>
-            }
-        </ul>
-    }
-}
+        @if (Model.Albums != null && Model.Albums.Any())
+        {
+            <div class="mb-5">
+                <h2 class="h4 mb-4 text-white">Albümler</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                    @foreach (var album in Model.Albums)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+                                <div class="position-relative">
+                                    @if (!string.IsNullOrEmpty(album.CoverImageUrl))
+                                    {
+                                        <img src="@album.CoverImageUrl" class="card-img-top" alt="@album.Title" style="height: 200px; object-fit: cover;">
+                                    }
+                                    else
+                                    {
+                                        <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background: rgba(255,255,255,0.1);">
+                                            <i class="fas fa-music fa-3x text-white-50"></i>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title text-white">@album.Title</h5>
+                                    <p class="card-text text-white-50">
+                                        <i class="fas fa-user me-2"></i>@album.Artist?.Name
+                                    </p>
+                                    <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-light btn-sm">
+                                        <i class="fas fa-info-circle me-1"></i>Detaylar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
 
-<div class="mt-4">
-    <a asp-action="Index" class="btn btn-secondary">Ana Sayfaya Geri Dön</a>
+        @if (Model.Songs != null && Model.Songs.Any())
+        {
+            <div class="mb-5">
+                <h2 class="h4 mb-4 text-white">Şarkılar</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                    @foreach (var song in Model.Songs)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm" style="background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);">
+                                <div class="card-body">
+                                    <h5 class="card-title text-white">@song.Title</h5>
+                                    <p class="card-text text-white-50">
+                                        <i class="fas fa-user me-2"></i>@song.Album?.Artist?.Name
+                                    </p>
+                                    <p class="card-text text-white-50">
+                                        <i class="fas fa-compact-disc me-2"></i>@song.Album?.Title
+                                    </p>
+                                    <p class="card-text text-white-50">
+                                        <i class="fas fa-clock me-2"></i>@TimeSpan.FromSeconds(song.DurationSeconds).ToString(@"mm\:ss")
+                                    </p>
+                                    <a asp-controller="Songs" asp-action="Details" asp-route-id="@song.SongId" class="btn btn-light btn-sm">
+                                        <i class="fas fa-info-circle me-1"></i>Detaylar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
 </div>
+
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    }
+
+    .btn-light {
+        background: rgba(255,255,255,0.9);
+        border: none;
+    }
+
+    .btn-light:hover {
+        background: #fff;
+    }
+</style>

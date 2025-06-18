@@ -41,7 +41,9 @@
                          onerror="this.onerror=null;this.src='/images/albums/default_album.jpg';" />
                     <div class="card-body">
                         <h6 class="card-title">@album.Title</h6>
-                        <p class="card-text"><small class="text-muted">@album.ReleaseDate.Year</small></p>
+                        <p class="card-text"><small class="text-muted">
+                            @(album.ReleaseDate.HasValue ? album.ReleaseDate.Value.Year.ToString() : "")
+                        </small></p>
                         <a asp-controller="Albums" asp-action="Details" asp-route-id="@album.AlbumId" class="btn btn-sm btn-outline-primary">Detaylar</a>
                     </div>
                 </div>
